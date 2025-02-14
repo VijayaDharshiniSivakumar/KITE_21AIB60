@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        /* Basic table styling */
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Display total */
+        .total-value {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.5em;
+            color: #28a745;
+        }
+
+        /* Message alerts */
+        .alert-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            color: #856404;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .add-product {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: #28a745;
+            padding: 12px 20px;
+            border-radius: 5px;
+            max-width: 150px;
+        }
+
+        .add-product:hover {
+            background-color: #218838;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-top: 30px;
+        }
+        .delete-btn {
+            padding: 5px 10px;
+            color: #fff;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock available</h1>
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+            <div class="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Value</th>
+                <th>Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.value }}</td>
+                <td>
+                    <!-- Delete Form -->
+                    <form action="{% url 'delete_product' item.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to Sell this product?')">
+                            Sell
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No products available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="total-value">
+         Total Value: ₹{{ total_value }}
+    </div>
+    <a href="{% url 'add_data' %}" class="add-product"> Add New Product</a>
+</body>
+</html>
