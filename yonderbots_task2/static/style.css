@@ -1,0 +1,31 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    text-align: center;
+}
+
+input, button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 1em;
+}
+
+button {
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button.delete {
+    background-color: #e74c3c;
+}
+
+button.update {
+    background-color: #2980b9;
+}
+
+.flash {
+    color: red;
+}

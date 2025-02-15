@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h2>Admin Panel - Manage Stocks</h2>
+
+    <!-- Add Stock -->
+    <h3>Add Stock</h3>
+    <form method="post">
+        <input type="text" name="name" placeholder="Stock Name" required>
+        <input type="number" name="quantity" placeholder="Quantity" min="1" required>
+        <button type="submit">Add Stock</button>
+    </form>
+
+    <!-- Existing Stocks -->
+    <h3>Existing Stocks</h3>
+    <table border="1" width="50%" align="center">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        {% for stock in stocks %}
+        <tr>
+            <td>{{ stock.name }}</td>
+            <td>{{ stock.quantity }}</td>
+            <td>
+                <form action="/update_stock/{{ stock.id }}" method="post">
+                    <input type="number" name="quantity" min="1" required>
+                    <button class="update" type="submit">Update</button>
+                </form>
+            </td>
+            <td>
+                <form action="/delete_stock/{{ stock.id }}" method="post">
+                    <button class="delete" type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/">Go to User View</a> | <a href="/logout">Logout</a>
+</body>
+</html>

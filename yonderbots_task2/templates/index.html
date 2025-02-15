@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Available Stocks</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h2>Available Stocks</h2>
+    <table border="1" width="50%" align="center">
+        <tr>
+            <th>Name</th>
+            <th>Available Quantity</th>
+            <th>Buy</th>
+        </tr>
+        {% for stock in stocks %}
+        <tr>
+            <td>{{ stock.name }}</td>
+            <td>{{ stock.quantity }}</td>
+            <td>
+                <form action="/buy/{{ stock.id }}" method="post">
+                    <input type="number" name="quantity" min="1" required>
+                    <button type="submit">Buy</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/logout">Logout</a>
+</body>
+</html>
